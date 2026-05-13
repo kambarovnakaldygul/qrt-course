@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#003087">
+<title>QRT.kz — Дайындық курсы</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: 'Nunito', Arial, sans-serif; background: #F2F6FF; color: #0A1A3A; overflow-x: hidden; }
+
+/* LANG BAR */
+.lang-bar { display: flex; background: #003087; padding: 10px 16px; gap: 10px; }
+.lang-btn {
+  flex: 1; padding: 10px; border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 10px; background: transparent; color: rgba(255,255,255,0.6);
+  font-size: 13px; font-weight: 800; font-family: 'Nunito', Arial, sans-serif;
+  cursor: pointer; min-height: 44px;
+}
+.lang-btn.on { background: #F5A623; color: #0A1A3A; border-color: #F5A623; }
+
+/* SCREENS */
+.pg { display: none; }
+.pg.on { display: block; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(150deg, #003087 0%, #004ED0 100%);
+  padding: 36px 20px 48px; position: relative; overflow: hidden;
+}
+.hero-circle {
+  position: absolute; top: -60px; right: -60px;
+  width: 240px; height: 240px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,166,35,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-wave {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 28px;
+  background: #F2F6FF; border-radius: 28px 28px 0 0;
+  pointer-events: none;
+}
+.badge {
+  display: inline-block; background: rgba(255,255,255,0.13);
+  border: 1px solid rgba(255,255,255,0.22); border-radius: 100px;
+  padding: 6px 13px; font-size: 11px; font-weight: 800;
+  color: #FFD166; letter-spacing: 0.06em; text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.org { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 700; margin-bottom: 7px; }
+.h1 { font-family: 'Unbounded', Arial, sans-serif; font-size: 22px; font-weight: 900; color: #fff; line-height: 1.22; margin-bottom: 10px; }
+.h1 span { color: #F5A623; }
+.hsub { font-size: 13px; color: rgba(255,255,255,0.72); line-height: 1.65; margin-bottom: 24px; }
+.price-box {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 16px; padding: 18px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.price-lbl { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 700; margin-bottom: 4px; }
+.price-old { font-size: 15px; color: rgba(255,255,255,0.4); font-weight: 700; text-decoration: line-through; text-decoration-color: #E53935; margin-bottom: 3px; }
+.price-new { font-family: 'Unbounded', Arial, sans-serif; font-size: 26px; font-weight: 900; color: #F5A623; }
+.price-save { display: inline-block; background: #E53935; color: #fff; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 6px; margin-top: 5px; }
+.price-ico { font-size: 44px; }
+
+/* CARD */
+.card { background: #fff; border-radius: 18px; margin: 0 14px 14px; padding: 20px; box-shadow: 0 4px 18px rgba(0,48,135,0.07); }
+.ctitle { font-family: 'Unbounded', Arial, sans-serif; font-size: 11px; font-weight: 700; color: #0055B3; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 16px; }
+
+/* MODULES */
+.mgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mchip { border-radius: 13px; padding: 14px 12px; text-align: center; background: linear-gradient(135deg, #EEF5FF, #D6E9FF); }
+.mchip .mn { font-size: 9px; color: #1E90FF; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 5px; }
+.mchip .mk { font-size: 14px; font-weight: 800; color: #0A1A3A; }
+.mchip .mr { font-size: 11px; color: #6B84B0; margin-top: 2px; }
+
+/* LEVELS */
+.levels { display: flex; gap: 7px; flex-wrap: wrap; }
+.lvl { background: linear-gradient(135deg, #003087, #0055B3); color: #fff; border-radius: 9px; padding: 8px 14px; font-family: 'Unbounded', Arial, sans-serif; font-size: 12px; font-weight: 700; }
+.lvl-desc { font-size: 12px; color: #6B84B0; margin-top: 10px; line-height: 1.6; }
+
+/* INCLUDE LIST */
+.inc-row { display: flex; align-items: flex-start; gap: 12px; padding: 11px 0; border-bottom: 1px solid #EEF3FB; }
+.inc-row:last-child { border: none; }
+.inc-ico { width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0; background: linear-gradient(135deg, #EEF5FF, #D6E9FF); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.inc-name { font-size: 14px; font-weight: 800; color: #0A1A3A; }
+.inc-desc { font-size: 12px; color: #6B84B0; margin-top: 2px; line-height: 1.5; }
+
+/* REVIEWS */
+.reviews { overflow-x: auto; padding: 0 14px 16px; display: flex; gap: 12px; -webkit-overflow-scrolling: touch; }
+.rcard { min-width: 270px; background: #fff; border-radius: 18px; padding: 18px; box-shadow: 0 4px 18px rgba(0,48,135,0.07); flex-shrink: 0; }
+.rstars { font-size: 14px; margin-bottom: 10px; }
+.rtext { font-size: 13px; font-style: italic; line-height: 1.65; color: #0A1A3A; margin-bottom: 12px; }
+.rauthor { display: flex; align-items: center; gap: 9px; }
+.rava { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+.rname { font-size: 13px; font-weight: 800; color: #0A1A3A; }
+.rrole { font-size: 11px; color: #6B84B0; }
+
+/* AGREE */
+.agree-wrap { padding: 0 14px 20px; }
+.agree-q { font-size: 15px; font-weight: 800; color: #0A1A3A; text-align: center; margin-bottom: 16px; line-height: 1.5; }
+.agree-hint { text-align: center; font-size: 12px; color: #6B84B0; margin-top: 10px; }
+
+/* BUTTONS */
+.btn-main {
+  display: block; width: 100%; padding: 20px; border: none; border-radius: 18px;
+  font-family: 'Unbounded', Arial, sans-serif; font-size: 14px; font-weight: 700;
+  cursor: pointer; text-align: center; text-decoration: none; min-height: 56px;
+  -webkit-appearance: none; appearance: none;
+}
+.btn-blue { background: linear-gradient(135deg, #0055B3, #1E90FF); color: #fff; box-shadow: 0 8px 28px rgba(0,85,179,0.35); margin-bottom: 10px; }
+.btn-wa { background: linear-gradient(135deg, #1DB954, #25D366); color: #fff; box-shadow: 0 8px 28px rgba(37,211,102,0.35); margin-bottom: 12px; }
+.btn-red { display: flex; align-items: center; justify-content: center; gap: 10px; background: #E53935; color: #fff; box-shadow: 0 6px 20px rgba(229,57,53,0.4); text-decoration: none; width: 100%; padding: 18px; border-radius: 14px; font-family: 'Unbounded', Arial, sans-serif; font-size: 13px; font-weight: 700; min-height: 54px; }
+.btn-back { background: transparent; border: 2px solid #CBD5E0; color: #6B84B0; margin-bottom: 10px; font-family: 'Nunito', Arial, sans-serif; }
+.btn-green { background: linear-gradient(135deg, #003087, #0055B3); color: #fff; box-shadow: 0 8px 24px rgba(0,48,135,0.3); }
+
+/* PAY HERO */
+.pay-hero {
+  background: linear-gradient(145deg, #0A3D20, #15803D);
+  padding: 30px 20px 46px; text-align: center; position: relative; overflow: hidden;
+}
+.pay-wave { position: absolute; bottom: 0; left: 0; right: 0; height: 28px; background: #F2F6FF; border-radius: 28px 28px 0 0; pointer-events: none; }
+.pay-ico { font-size: 48px; margin-bottom: 10px; }
+.pay-title { font-family: 'Unbounded', Arial, sans-serif; font-size: 19px; font-weight: 900; color: #fff; margin-bottom: 8px; }
+.pay-sub { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+/* KASPI CARD */
+.kaspi-card { background: linear-gradient(135deg, #FFFBEF, #FFF3CC); border: 2px solid #F5A623; border-radius: 18px; margin: 0 14px 14px; padding: 20px; }
+.kaspi-brand { font-family: 'Unbounded', Arial, sans-serif; font-size: 17px; font-weight: 900; color: #E53935; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.krow { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-bottom: 1px solid rgba(245,166,35,0.25); }
+.krow:last-child { border: none; }
+.klbl { font-size: 12px; color: #6B84B0; font-weight: 700; }
+.kval { font-size: 14px; font-weight: 800; color: #0A1A3A; }
+.kval-big { font-family: 'Unbounded', Arial, sans-serif; font-size: 20px; color: #F5A623; font-weight: 900; }
+.kval-old { font-size: 13px; color: #aaa; text-decoration: line-through; text-decoration-color: #E53935; margin-right: 6px; }
+
+/* STEPS */
+.srow { display: flex; align-items: flex-start; gap: 13px; padding: 10px 0; border-bottom: 1px solid #EEF3FB; }
+.srow:last-child { border: none; }
+.snum { width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, #0055B3, #1E90FF); color: #fff; font-family: 'Unbounded', Arial, sans-serif; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.stitle { font-size: 13px; font-weight: 800; color: #0A1A3A; }
+.ssub { font-size: 12px; color: #6B84B0; margin-top: 2px; line-height: 1.5; }
+
+/* SUCCESS */
+.success-wrap { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px; text-align: center; background: linear-gradient(160deg, #F0FFF7, #E6FFF2); }
+.s-ico { width: 94px; height: 94px; border-radius: 50%; background: linear-gradient(135deg, #1DB954, #16A34A); display: flex; align-items: center; justify-content: center; font-size: 44px; margin: 0 auto 22px; box-shadow: 0 14px 44px rgba(29,185,84,0.3); }
+.s-title { font-family: 'Unbounded', Arial, sans-serif; font-size: 20px; font-weight: 900; color: #0A1A3A; margin-bottom: 14px; }
+.s-desc { font-size: 14px; color: #6B84B0; line-height: 1.75; max-width: 310px; margin: 0 auto 28px; }
+.s-desc strong { color: #0A1A3A; }
+
+/* UTILS */
+.pt12 { padding-top: 12px; }
+.pt14 { padding-top: 14px; }
+.safe { height: 32px; }
+.bwrap { padding: 0 14px 14px; }
+
+/* TOAST */
+#toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #0A1A3A; color: #fff; padding: 11px 22px; border-radius: 100px; font-size: 13px; font-weight: 700; z-index: 999; opacity: 0; transition: opacity 0.25s; pointer-events: none; white-space: nowrap; }
+#toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- ТІЛ / ЯЗЫК -->
+<div class="lang-bar">
+  <button class="lang-btn on" id="bkk" onclick="setLang('kk')">🇰🇿 Қазақша</button>
+  <button class="lang-btn"    id="bru" onclick="setLang('ru')">🇷🇺 Русский</button>
+</div>
+
+
+<!-- ═══════════════════════════
+     БЕТ 1 — КУРС ТУРАЛЫ
+═══════════════════════════ -->
+<div id="p1" class="pg on">
+
+  <div class="hero">
+    <div class="hero-circle"></div>
+    <div class="hero-wave"></div>
+    <div class="badge">🎓 <span kk="Ресми серіктес · APA.KZ" ru="Официальный партнёр · APA.KZ">Ресми серіктес · APA.KZ</span></div>
+    <div class="org" kk="Мемлекеттік басқару академиясы (apa.kz)" ru="Академия государственного управления (apa.kz)">Мемлекеттік басқару академиясы (apa.kz)</div>
+    <h1 class="h1"><span>QRT.kz</span> — <span kk="тестіне дайындық курсы" ru="курс подготовки к тестированию">тестіне дайындық курсы</span></h1>
+    <p class="hsub" kk="Ресми іскерлік қазақ тілі тестіне жан-жақты дайындық. 5 модуль, тренажёр тесттер, куратор және жабық топ." ru="Комплексная подготовка к официальному тесту QAZAQ RESMI TEST. 5 модулей, тренажёры, куратор и закрытая группа.">Ресми іскерлік қазақ тілі тестіне жан-жақты дайындық. 5 модуль, тренажёр тесттер, куратор және жабық топ.</p>
+    <div class="price-box">
+      <div>
+        <div class="price-lbl" kk="Курс бағасы" ru="Стоимость курса">Курс бағасы</div>
+        <div class="price-old">160 000 ₸</div>
+        <div class="price-new">96 000 ₸</div>
+        <div class="price-save" kk="−40% жеңілдік!" ru="Скидка −40%!">−40% жеңілдік!</div>
+      </div>
+      <div class="price-ico">📚</div>
+    </div>
+  </div>
+
+  <div class="pt12"></div>
+
+  <!-- МОДУЛЬДЕР -->
+  <div class="card">
+    <div class="ctitle" kk="📋 Тест модульдері" ru="📋 Модули теста">📋 Тест модульдері</div>
+    <div class="mgrid">
+      <div class="mchip"><div class="mn">I БӨЛІМ</div><div class="mk">Тыңдалым</div><div class="mr" kk="Аудирование" ru="Аудирование">Аудирование</div></div>
+      <div class="mchip"><div class="mn">II БӨЛІМ</div><div class="mk">Лексикография</div><div class="mr" kk="Сөздік қор, грамматика" ru="Лексика и грамматика">Сөздік қор, грамматика</div></div>
+      <div class="mchip"><div class="mn">III БӨЛІМ</div><div class="mk">Оқылым</div><div class="mr" kk="Оқу дағдысы" ru="Чтение">Оқу дағдысы</div></div>
+      <div class="mchip"><div class="mn">IV БӨЛІМ</div><div class="mk">Жазылым</div><div class="mr" kk="Диктант, эссе" ru="Диктант, эссе">Диктант, эссе</div></div>
+    </div>
+    <div class="mchip" style="margin-top:10px;background:linear-gradient(135deg,#FFF5E0,#FFE9B0)">
+      <div class="mn" style="color:#B45309">V БӨЛІМ</div>
+      <div class="mk">Сұхбат</div>
+      <div class="mr" kk="Ауызша сөйлеу" ru="Сұхбат">Ауызша сөйлеу</div>
+    </div>
+  </div>
+
+  <!-- ДЕҢГЕЙЛЕР -->
+  <div class="card">
+    <div class="ctitle" kk="🏅 Тест деңгейлері" ru="🏅 Уровни теста">🏅 Тест деңгейлері</div>
+    <div class="levels">
+      <div class="lvl">A1</div><div class="lvl">A2</div>
+      <div class="lvl">B1</div><div class="lvl">B2</div><div class="lvl">C1</div>
+    </div>
+    <div class="lvl-desc" kk="Курсымыз барлық деңгейлерді қамтиды. Мемлекеттік органдарға жұмысқа кіру үшін B1–B2 деңгейі талап етіледі." ru="Наш курс охватывает все уровни. Для госслужбы требуется уровень B1–B2.">Курсымыз барлық деңгейлерді қамтиды. Мемлекеттік органдарға жұмысқа кіру үшін B1–B2 деңгейі талап етіледі.</div>
+  </div>
+
+  <!-- НЕ КІРЕДІ -->
+  <div class="card">
+    <div class="ctitle" kk="✅ Курсқа не кіреді" ru="✅ Что входит в курс">✅ Курсқа не кіреді</div>
+    <div class="inc-row"><div class="inc-ico">🎯</div><div><div class="inc-name" kk="Барлық 5 модуль бойынша сабақтар" ru="Уроки по всем 5 модулям">Барлық 5 модуль бойынша сабақтар</div><div class="inc-desc" kk="QRT форматындағы нақты мысалдар мен тапсырмалар" ru="Реальные примеры и задания в формате QRT">QRT форматындағы нақты мысалдар мен тапсырмалар</div></div></div>
+    <div class="inc-row"><div class="inc-ico">📝</div><div><div class="inc-name" kk="Тренажёр тесттер" ru="Тренажёрные тесты">Тренажёр тесттер</div><div class="inc-desc" kk="Нақты емтихан форматындағы жаттығу тапсырмалары" ru="Тренировочные задания в реальном формате экзамена">Нақты емтихан форматындағы жаттығу тапсырмалары</div></div></div>
+    <div class="inc-row"><div class="inc-ico">✏️</div><div><div class="inc-name" kk="Жазылым мен Сұхбатты терең оқыту" ru="Углублённая работа над Жазылым и Сұхбат">Жазылым мен Сұхбатты терең оқыту</div><div class="inc-desc" kk="Эссе, диктант — куратормен бірге жасаймыз" ru="Эссе, диктант — разбираем с куратором">Эссе, диктант — куратормен бірге жасаймыз</div></div></div>
+    <div class="inc-row"><div class="inc-ico">👥</div><div><div class="inc-name" kk="Жабық Telegram тобы" ru="Закрытая Telegram-группа">Жабық Telegram тобы</div><div class="inc-desc" kk="Материалдар, куратор жауаптары, топтық жаттығулар" ru="Материалы, ответы куратора, групповые практики">Материалдар, куратор жауаптары, топтық жаттығулар</div></div></div>
+    <div class="inc-row"><div class="inc-ico">🏆</div><div><div class="inc-name" kk="Қателерді талдау" ru="Разбор ошибок">Қателерді талдау</div><div class="inc-desc" kk="Куратор балл жоғалтатын жерлерді нақты түсіндіреді" ru="Куратор объяснит где теряются баллы">Куратор балл жоғалтатын жерлерді нақты түсіндіреді</div></div></div>
+    <div class="inc-row"><div class="inc-ico">⏰</div><div><div class="inc-name" kk="3 ай қолжетімділік" ru="Доступ 3 месяца">3 ай қолжетімділік</div><div class="inc-desc" kk="Өзіңізге ыңғайлы қарқынмен үйреніңіз" ru="Учитесь в удобном темпе">Өзіңізге ыңғайлы қарқынмен үйреніңіз</div></div></div>
+  </div>
+
+  <!-- ПІКІРЛЕР -->
+  <div style="padding: 0 14px 4px;">
+    <div class="ctitle" kk="💬 Оқушылар пікірі" ru="💬 Отзывы слушателей">💬 Оқушылар пікірі</div>
+  </div>
+  <div class="reviews">
+    <div class="rcard">
+      <div class="rstars">⭐⭐⭐⭐⭐</div>
+      <div class="rtext" kk="«Бірінші рет B2 алдым! Жазылым бөлімінің талдауы өте пайдалы болды. Ұсынамын!»" ru="«Сдала B2 с первого раза! Разбор Жазылым очень помог. Рекомендую!»">«Бірінші рет B2 алдым! Жазылым бөлімінің талдауы өте пайдалы болды. Ұсынамын!»</div>
+      <div class="rauthor"><div class="rava" style="background:linear-gradient(135deg,#F5A623,#FFD166)">👩</div><div><div class="rname">Дана С.</div><div class="rrole" kk="APA маманы, Астана" ru="Специалист APA, Астана">APA маманы, Астана</div></div></div>
+    </div>
+    <div class="rcard">
+      <div class="rstars">⭐⭐⭐⭐⭐</div>
+      <div class="rtext" kk="«Сұхбат бөлімінен қорқатынмын. Курстан кейін сенімді болдым. Куратор керемет түсіндірді.»" ru="«Боялся раздела Сұхбат. После курса стал уверенным. Куратор отлично объяснял.»">«Сұхбат бөлімінен қорқатынмын. Курстан кейін сенімді болдым. Куратор керемет түсіндірді.»</div>
+      <div class="rauthor"><div class="rava" style="background:linear-gradient(135deg,#1E90FF,#0055B3)">👨</div><div><div class="rname">Арман Б.</div><div class="rrole" kk="Мемлекеттік қызметші, Алматы" ru="Госслужащий, Алматы">Мемлекеттік қызметші, Алматы</div></div></div>
+    </div>
+    <div class="rcard">
+      <div class="rstars">⭐⭐⭐⭐⭐</div>
+      <div class="rtext" kk="«3 айда B1-ден B2-ге өттім. Материалдар өте жүйелі. Тренажёр тесттер нақты форматқа ұқсас.»" ru="«За 3 месяца перешла с B1 на B2. Материалы систематизированы. Тренажёры похожи на реальный формат.»">«3 айда B1-ден B2-ге өттім. Материалдар өте жүйелі. Тренажёр тесттер нақты форматқа ұқсас.»</div>
+      <div class="rauthor"><div class="rava" style="background:linear-gradient(135deg,#16A34A,#15803D)">👩</div><div><div class="rname">Жанар М.</div><div class="rrole" kk="Банк қызметкері, Астана" ru="Сотрудник банка, Астана">Банк қызметкері, Астана</div></div></div>
+    </div>
+    <div class="rcard">
+      <div class="rstars">⭐⭐⭐⭐⭐</div>
+      <div class="rtext" kk="«C1 деңгейі керек болды. Курс мені мақсатқа жеткізді. Рахмет!»" ru="«Нужен был уровень C1. Курс помог достичь цели. Спасибо!»">«C1 деңгейі керек болды. Курс мені мақсатқа жеткізді. Рахмет!»</div>
+      <div class="rauthor"><div class="rava" style="background:linear-gradient(135deg,#9333EA,#6D28D9)">👨</div><div><div class="rname">Нұрлан Қ.</div><div class="rrole" kk="IT маманы, Астана" ru="IT-специалист, Астана">IT маманы, Астана</div></div></div>
+    </div>
+  </div>
+
+  <!-- БАТЫРМА -->
+  <div class="agree-wrap">
+    <div class="agree-q" kk="Курсқа жазылғыңыз келе ме?" ru="Хотите записаться на курс?">Курсқа жазылғыңыз келе ме?</div>
+    <button class="btn-main btn-blue" onclick="goPage('p2')">
+      <span kk="💳 Төлем жасау" ru="💳 Оплатить">💳 Төлем жасау</span>
+    </button>
+    <div class="agree-hint" kk="Басыңыз — төлем деректемелері бірден шығады" ru="Нажмите — сразу покажем реквизиты">Басыңыз — төлем деректемелері бірден шығады</div>
+  </div>
+
+  <div class="safe"></div>
+</div>
+
+
+<!-- ═══════════════════════════
+     БЕТ 2 — ТӨЛЕМ
+═══════════════════════════ -->
+<div id="p2" class="pg">
+
+  <div class="pay-hero">
+    <div class="pay-wave"></div>
+    <div class="pay-ico">🎉</div>
+    <div class="pay-title" id="pay-title" kk="Тамаша! Жазылдыңыз" ru="Отлично! Вы записались">Тамаша! Жазылдыңыз</div>
+    <div class="pay-sub" kk="Kaspi Pay арқылы төлеп, чекті бізге жіберіңіз" ru="Оплатите через Kaspi Pay и отправьте нам чек">Kaspi Pay арқылы төлеп, чекті бізге жіберіңіз</div>
+  </div>
+
+  <div class="pt14"></div>
+
+  <!-- KASPI PAY -->
+  <div class="kaspi-card">
+    <div class="kaspi-brand">
+      <svg width="26" height="26" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#E53935"/><text x="20" y="27" text-anchor="middle" font-size="20" font-weight="900" fill="white" font-family="Arial">K</text></svg>
+      Kaspi Pay
+    </div>
+    <div class="krow">
+      <span class="klbl" kk="Сомасы" ru="Сумма">Сомасы</span>
+      <div><span class="kval-old">160 000 ₸</span><span class="kval-big">96 000 ₸</span></div>
+    </div>
+    <div class="krow">
+      <span class="klbl" kk="Тауар" ru="Товар">Тауар</span>
+      <span class="kval">QRT.kz курс</span>
+    </div>
+    <div style="padding-top:16px">
+      <a href="https://pay.kaspi.kz/pay/dfwnrezk" target="_blank" class="btn-red">
+        <svg width="20" height="20" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="rgba(255,255,255,0.2)"/><text x="20" y="27" text-anchor="middle" font-size="18" font-weight="900" fill="white" font-family="Arial">K</text></svg>
+        <span kk="Kaspi Pay арқылы төлеу" ru="Оплатить через Kaspi Pay">Kaspi Pay арқылы төлеу</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ҚАДАМДАР -->
+  <div class="card">
+    <div class="ctitle" kk="📋 Қалай төлеуге болады" ru="📋 Как оплатить">📋 Қалай төлеуге болады</div>
+    <div class="srow">
+      <div class="snum">1</div>
+      <div><div class="stitle" kk="«Kaspi Pay арқылы төлеу» басыңыз" ru="Нажмите «Оплатить через Kaspi Pay»">«Kaspi Pay арқылы төлеу» басыңыз</div><div class="ssub" kk="Kaspi қолданбасы ашылады, счет автоматты шығады" ru="Откроется приложение Kaspi со счётом">Kaspi қолданбасы ашылады, счет автоматты шығады</div></div>
+    </div>
+    <div class="srow">
+      <div class="snum">2</div>
+      <div><div class="stitle" kk="ТОО «DIGITAL SYSTEM OF KAZAKHSTAN» шығады" ru="Появится ТОО «DIGITAL SYSTEM OF KAZAKHSTAN»">ТОО «DIGITAL SYSTEM OF KAZAKHSTAN» шығады</div><div class="ssub" kk="Сомасы енгізу жолына 96 000 теріңіз және төлеңіз" ru="Введите сумму 96 000 в поле и оплатите">Сомасы енгізу жолына 96 000 теріңіз және төлеңіз</div></div>
+    </div>
+    <div class="srow">
+      <div class="snum">3</div>
+      <div><div class="stitle" kk="Осы бетке қайта оралыңыз" ru="Вернитесь на эту страницу">Осы бетке қайта оралыңыз</div><div class="ssub" kk="Төлем аяқталғаннан кейін осы бетке қайта келіңіз" ru="После оплаты вернитесь на эту страницу">Төлем аяқталғаннан кейін осы бетке қайта келіңіз</div></div>
+    </div>
+    <div class="srow">
+      <div class="snum">4</div>
+      <div><div class="stitle" kk="«Төледім» батырмасын басып чек жіберіңіз" ru="Нажмите «Оплатил(а)» и отправьте чек">«Төледім» батырмасын басып чек жіберіңіз</div><div class="ssub" kk="WhatsApp ашылады → Kaspi-де «Бөлісу» → WhatsApp → чекті бізге жіберіңіз" ru="Откроется WhatsApp → в Kaspi «Поделиться» → WhatsApp → отправьте чек">WhatsApp ашылады → Kaspi-де «Бөлісу» → WhatsApp → чекті бізге жіберіңіз</div></div>
+    </div>
+  </div>
+
+  <div class="bwrap">
+    <button class="btn-main btn-wa" onclick="openWA()">
+      <span kk="✅ Төледім — WhatsApp-қа жазу" ru="✅ Я оплатил(а) — написать в WhatsApp">✅ Төледім — WhatsApp-қа жазу</span>
+    </button>
+    <button class="btn-main btn-back" onclick="goPage('p1')">
+      <span kk="← Артқа" ru="← Назад">← Артқа</span>
+    </button>
+  </div>
+
+  <div class="safe"></div>
+</div>
+
+
+<!-- ═══════════════════════════
+     БЕТ 3 — СӘТТІ
+═══════════════════════════ -->
+<div id="p3" class="pg">
+  <div class="success-wrap">
+    <div class="s-ico">✅</div>
+    <div class="s-title" kk="WhatsApp ашылды!" ru="WhatsApp открылся!">WhatsApp ашылды!</div>
+    <p class="s-desc">
+      <span kk="Kaspi-де «Бөлісу» → WhatsApp арқылы чекті бізге жіберіңіз." ru="В Kaspi нажмите «Поделиться» → WhatsApp и отправьте нам чек.">Kaspi-де «Бөлісу» → WhatsApp арқылы чекті бізге жіберіңіз.</span>
+      <br><br>
+      <span kk="Төлемді 30 минут ішінде тексереміз." ru="Проверим оплату в течение 30 минут.">Төлемді 30 минут ішінде тексереміз.</span>
+      <br><br>
+      <span kk="Растаудан кейін Telegram тобына <strong>жеке сілтеме</strong> жіберіледі. 🎓" ru="После подтверждения придёт <strong>персональная ссылка</strong> на Telegram. 🎓">Растаудан кейін Telegram тобына <strong>жеке сілтеме</strong> жіберіледі. 🎓</span>
+    </p>
+    <button class="btn-main btn-wa" onclick="openWA()" style="max-width:320px">
+      <span kk="📲 WhatsApp ашу" ru="📲 Открыть WhatsApp">📲 WhatsApp ашу</span>
+    </button>
+    <div style="height:12px"></div>
+    <button class="btn-main btn-green" onclick="goPage('p1')" style="max-width:320px">
+      <span kk="🏠 Басты бетке" ru="🏠 На главную">🏠 Басты бетке</span>
+    </button>
+  </div>
+</div>
+
+
+<script>
+var ADMIN_WA = "77010893434";
+var PRICE    = "96 000 ₸";
+var lang     = "kk";
+var waUrl    = "";
+
+function goPage(id) {
+  document.getElementById("p1").className = "pg";
+  document.getElementById("p2").className = "pg";
+  document.getElementById("p3").className = "pg";
+  document.getElementById(id).className = "pg on";
+  window.scrollTo(0, 0);
+}
+
+function setLang(l) {
+  lang = l;
+  document.getElementById("bkk").className = l === "kk" ? "lang-btn on" : "lang-btn";
+  document.getElementById("bru").className = l === "ru" ? "lang-btn on" : "lang-btn";
+
+  var all = document.querySelectorAll("[" + l + "]");
+  for (var i = 0; i < all.length; i++) {
+    var el = all[i];
+    var val = el.getAttribute(l);
+    if (val) el.innerHTML = val;
+  }
+
+  // Диңгіл мәтіндер
+  var others = l === "kk" ? "ru" : "kk";
+  var otherEls = document.querySelectorAll("[" + others + "]");
+  for (var j = 0; j < otherEls.length; j++) {
+    var oel = otherEls[j];
+    var kval = oel.getAttribute("kk");
+    var rval = oel.getAttribute("ru");
+    if (kval && rval) {
+      oel.innerHTML = l === "kk" ? kval : rval;
+    }
+  }
+}
+
+function openWA() {
+  var now = new Date();
+  var dt = now.toLocaleString("ru-KZ", {
+    day: "2-digit", month: "2-digit", year: "numeric",
+    hour: "2-digit", minute: "2-digit"
+  });
+  var msg = lang === "kk"
+    ? "Сәлеметсіз бе! 👋\n\n✅ QRT.kz курсын төледім\n\n💰 Сомасы: " + PRICE + "\n🕐 Уақыты: " + dt + "\n\nЧекті жіберемін 👇"
+    : "Здравствуйте! 👋\n\n✅ Я оплатил(а) курс QRT.kz\n\n💰 Сумма: " + PRICE + "\n🕐 Время: " + dt + "\n\nОтправляю чек 👇";
+
+  waUrl = "https://wa.me/" + ADMIN_WA + "?text=" + encodeURIComponent(msg);
+  goPage("p3");
+  window.location.href = waUrl;
+}
+
+function showToast(msg) {
+  var t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "show";
+  setTimeout(function() { t.className = ""; }, 2000);
+}
+</script>
+</body>
+</html>
